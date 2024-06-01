@@ -18,4 +18,4 @@ This repository contains a collection of useful Google Sheets scripts designed t
 Contributions are welcome! Feel free to fork this repository, make improvements, and submit pull requests.
 
 ## License:
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/DigitalMast/google-sheets-scripts/blob/main/LICENSE) file for details.
