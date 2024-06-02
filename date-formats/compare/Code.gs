@@ -2,9 +2,11 @@ function applyConditionalFormatting() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
   // Define the range where you want to apply the formatting
-  var range = sheet.getRange('H2:H1000');
+  var rangeH = sheet.getRange('H2:H1000');
+  var rangeI = sheet.getRange('I2:I1000');
+  var rangeJ = sheet.getRange('J2:J1000');
 
-  // Remove existing conditional formatting rules for the specific range
+  // Remove existing conditional formatting rules for the specific ranges
   var rules = sheet.getConditionalFormatRules();
   var newRules = [];
 
@@ -13,7 +15,9 @@ function applyConditionalFormatting() {
     var keepRule = true;
 
     for (var j = 0; j < ruleRanges.length; j++) {
-      if (ruleRanges[j].getA1Notation() === range.getA1Notation()) {
+      if (ruleRanges[j].getA1Notation() === rangeH.getA1Notation() ||
+          ruleRanges[j].getA1Notation() === rangeI.getA1Notation() ||
+          ruleRanges[j].getA1Notation() === rangeJ.getA1Notation()) {
         keepRule = false;
         break;
       }
@@ -28,7 +32,7 @@ function applyConditionalFormatting() {
   var redRule1 = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied('=AND(ISDATE(I2), ISBLANK(J2), TODAY() > I2 + 7)')
     .setBackground('#FF0000')
-    .setRanges([range])
+    .setRanges([rangeH])
     .build();
 
   Logger.log("Red rule 1 created: %s", redRule1.getRanges().map(function(r) { return r.getA1Notation(); }).join(", "));
@@ -37,7 +41,7 @@ function applyConditionalFormatting() {
   var greenRule1 = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied('=AND(ISDATE(I2), ISBLANK(J2), TODAY() <= I2 + 7)')
     .setBackground('#00FF00')
-    .setRanges([range])
+    .setRanges([rangeH])
     .build();
 
   Logger.log("Green rule 1 created: %s", greenRule1.getRanges().map(function(r) { return r.getA1Notation(); }).join(", "));
@@ -46,7 +50,7 @@ function applyConditionalFormatting() {
   var redRule2 = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied('=AND(ISDATE(I2), ISDATE(J2), TODAY() > J2 + 7)')
     .setBackground('#FF0000')
-    .setRanges([range])
+    .setRanges([rangeH])
     .build();
 
   Logger.log("Red rule 2 created: %s", redRule2.getRanges().map(function(r) { return r.getA1Notation(); }).join(", "));
@@ -55,7 +59,7 @@ function applyConditionalFormatting() {
   var greenRule2 = SpreadsheetApp.newConditionalFormatRule()
     .whenFormulaSatisfied('=AND(ISDATE(I2), ISDATE(J2), TODAY() <= J2 + 7)')
     .setBackground('#00FF00')
-    .setRanges([range])
+    .setRanges([rangeH])
     .build();
 
   Logger.log("Green rule 2 created: %s", greenRule2.getRanges().map(function(r) { return r.getA1Notation(); }).join(", "));
@@ -68,11 +72,4 @@ function applyConditionalFormatting() {
   sheet.setConditionalFormatRules(newRules);
 
   Logger.log("Conditional formatting rules applied.");
-}
-
-function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('Custom Scripts')
-    .addItem('Apply Conditional Formatting', 'applyConditionalFormatting')
-    .addToUi();
 }
