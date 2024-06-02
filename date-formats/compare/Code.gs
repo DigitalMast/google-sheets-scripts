@@ -2,7 +2,7 @@ function applyConditionalFormatting() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   
   // Define the range where you want to apply the formatting
-  var range = sheet.getRange('J2:J1000');
+  var range = sheet.getRange('J2:J10');
   
   // Remove existing conditional formatting rules for the specific range
   var rules = sheet.getConditionalFormatRules();
