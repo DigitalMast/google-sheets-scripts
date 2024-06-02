@@ -1,4 +1,9 @@
 function onEdit(e) {
+  if (!e) {
+    Logger.log("No event object, likely running in the editor.");
+    return;
+  }
+  
   var sheet = e.source.getActiveSheet();
   var range = e.range;
   var oldValue = e.oldValue;
